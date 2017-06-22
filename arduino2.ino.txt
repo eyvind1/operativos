@@ -1,0 +1,41 @@
+#include <Wire.h>
+
+void setup() {
+  Wire.begin(10);                
+  Wire.onReceive(receiveEvent); // register event
+  Serial.begin(9600);
+  pinMode(22, OUTPUT);
+  pinMode(23, OUTPUT);
+  pinMode(24, OUTPUT);
+
+}
+void loop() {
+  byte x = 3;
+  Wire.beginTransmission(8); 
+  Wire.write(x);              
+  Wire.endTransmission();   
+  delay(1000);
+  x = 4;
+  Wire.beginTransmission(8); 
+  Wire.write(x);              
+  Wire.endTransmission();
+  delay(1000);
+}
+
+void receiveEvent(int howMany) {
+  int x = Wire.read();    
+  if(x==2)
+    {
+      digitalWrite(22, HIGH);
+      digitalWrite(23, HIGH);
+      digitalWrite(24, HIGH);
+      
+    } 
+   if(x==1)
+   {
+      digitalWrite(22, LOW);
+      digitalWrite(23, LOW);
+      digitalWrite(24, LOW);
+    }       
+   
+}
